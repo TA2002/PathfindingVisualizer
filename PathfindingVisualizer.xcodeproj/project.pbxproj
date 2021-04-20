@@ -13,6 +13,9 @@
 		6907CF34262D5B1C001166E9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6907CF33262D5B1C001166E9 /* Preview Assets.xcassets */; };
 		6907D02D262DD3BE001166E9 /* PathGridViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6907D02C262DD3BE001166E9 /* PathGridViewModel.swift */; };
 		6907D030262DD3CE001166E9 /* PathGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6907D02F262DD3CE001166E9 /* PathGrid.swift */; };
+		690BE793262F13B5002426CB /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690BE792262F13B5002426CB /* Coordinate.swift */; };
+		690BE796262F13D5002426CB /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690BE795262F13D5002426CB /* Node.swift */; };
+		690BE799262F1676002426CB /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690BE798262F1676002426CB /* Matrix.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		6907CF35262D5B1C001166E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6907D02C262DD3BE001166E9 /* PathGridViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathGridViewModel.swift; sourceTree = "<group>"; };
 		6907D02F262DD3CE001166E9 /* PathGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathGrid.swift; sourceTree = "<group>"; };
+		690BE792262F13B5002426CB /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
+		690BE795262F13D5002426CB /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		690BE798262F1676002426CB /* Matrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +93,9 @@
 			isa = PBXGroup;
 			children = (
 				6907D02F262DD3CE001166E9 /* PathGrid.swift */,
+				690BE792262F13B5002426CB /* Coordinate.swift */,
+				690BE795262F13D5002426CB /* Node.swift */,
+				690BE798262F1676002426CB /* Matrix.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -168,10 +177,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				690BE799262F1676002426CB /* Matrix.swift in Sources */,
 				6907D030262DD3CE001166E9 /* PathGrid.swift in Sources */,
 				6907CF2F262D5B1B001166E9 /* PathGridView.swift in Sources */,
 				6907CF2D262D5B1B001166E9 /* PathfindingVisualizerApp.swift in Sources */,
+				690BE796262F13D5002426CB /* Node.swift in Sources */,
 				6907D02D262DD3BE001166E9 /* PathGridViewModel.swift in Sources */,
+				690BE793262F13B5002426CB /* Coordinate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

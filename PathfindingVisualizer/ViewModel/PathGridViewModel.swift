@@ -27,10 +27,25 @@ class PathGridViewModel: ObservableObject {
     }
     
     func chooseStartingNode(x: Int, y: Int) {
-        model.chooseStartingNode(x: x, y: y)
+        if x >= 0 && x < model.numberOfRows && y >= 0 && y < model.numberOfColumns {
+            model.chooseStartingNode(x: x, y: y)
+        }
     }
     
     func chooseFinalNode(x: Int, y: Int) {
-        model.chooseFinalNode(x: x, y: y)
+        if x >= 0 && x < model.numberOfRows && y >= 0 && y < model.numberOfColumns {
+            model.chooseFinalNode(x: x, y: y)
+        }
     }
+    
+    func chooseObstacleNode(x: Int, y: Int) {
+        if x >= 0 && x < model.numberOfRows && y >= 0 && y < model.numberOfColumns {
+            model.chooseObstacleNode(x: x, y: y)
+        }
+    }
+    
+    func findPath() -> [[Int]] {
+        model.findPath()
+    }
+    
 }
