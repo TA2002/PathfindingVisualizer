@@ -58,7 +58,8 @@ struct PathGridView: View {
                     }).padding()
                 })
                 Button(action: {
-                    print(viewModel.findPath())
+                    viewModel.findPath()
+                    //print()
                 }, label: {
                     Text("Start Djikstra")
                 }).padding()
@@ -72,6 +73,9 @@ struct PathGridView: View {
     }
 
     private func nodeColor(node: PathGrid.Node) -> Color {
+//        if node.isPassed {
+//            return Color.purple
+//        }
         if node.isStartingNode {
             return Color.green
         }
