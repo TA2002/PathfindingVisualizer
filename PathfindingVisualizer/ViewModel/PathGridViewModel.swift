@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 class PathGridViewModel: ObservableObject {
     @Published private var model: PathGrid
@@ -51,8 +52,9 @@ class PathGridViewModel: ObservableObject {
 }
 
 extension PathGridViewModel {
-    func pathFinding() -> [[Int]]? {
-        //startTimer()
+    
+    func pathFinding() {
+        
         var starting_x: Int = 0
         var starting_y: Int = 0
         
@@ -71,92 +73,110 @@ extension PathGridViewModel {
                 }
             }
         }
-        let path = djikstra(starting_x: starting_x, starting_y: starting_y, final_x: final_x, final_y: final_y)
-//        DispatchQueue.global(qos: .userInitiated).sync {
-//
-//        }
-        return path
+        djikstra(starting_x: starting_x, starting_y: starting_y, final_x: final_x, final_y: final_y)
+        
+    }
+    
+    func pathColoring(_ v_x: Int, _ v_y: Int, _ interval: Int) {
+        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + .milliseconds(interval)) {
+            DispatchQueue.main.async {
+                print("part of path: \(v_x) \(v_y) interval \(interval)" )
+                self.model.nodes[v_x][v_y].isPartOfPath = true
+                
+            }
+        }
+    }
+    
+    func visitedColoring(_ v_x: Int, _ v_y: Int, _ interval: Int) {
+        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + .milliseconds(interval)) {
+            DispatchQueue.main.async {
+                //print("visited: \(v_x) \(v_y)"  )
+                withAnimation(.linear(duration: 0.5)){
+                    self.model.nodes[v_x][v_y].isAnimated = true
+                }
+            }
+        }
     }
     
     
-    
-    func djikstra(starting_x: Int, starting_y: Int, final_x: Int, final_y: Int) -> [[Int]]? {
-        let mx = 1000000
-        var matrix:Matrix<Int> = Matrix(rows: model.numberOfRows, columns: model.numberOfColumns, defaultValue: mx)
-        var p:Matrix<[Int]> = Matrix(rows: model.numberOfRows, columns: model.numberOfColumns, defaultValue: [0])
-        var u:Matrix<Bool> = Matrix(rows: model.numberOfRows, columns: model.numberOfColumns, defaultValue: false)
+    func djikstra(starting_x: Int, starting_y: Int, final_x: Int, final_y: Int) {
         
-        matrix[starting_x, starting_y] = 0
+        var visitedNodes = [PathGrid.Coordinate]()
+        let mx = 1000000
+        var distance:Matrix<Int> = Matrix(rows: model.numberOfRows, columns: model.numberOfColumns, defaultValue: mx)
+        var previousNode: Matrix<PathGrid.Coordinate> = Matrix(rows: model.numberOfRows, columns: model.numberOfColumns, defaultValue: PathGrid.Coordinate(x: -1, y: -1))
+        distance[starting_x, starting_y] = 0
+        
+        var unvisitedNodes = [PathGrid.Coordinate]()
         
         for x in (0..<model.numberOfRows) {
             for y in (0..<model.numberOfColumns) {
-                var v_x = -1
-                var v_y = -1
-                
-                for x2 in (0..<model.numberOfRows) {
-                    for y2 in (0..<model.numberOfColumns) {
-                        if (u[x2, y2] == false) && ((v_x == -1 || v_y == -1) || matrix[x2, y2] < matrix[v_x, v_y]) {
-                            v_x = x2
-                            v_y = y2
-                        }
-                        
-                    }
-                }
-                
-                if matrix[v_x, v_y] == mx {
-                    break
-                }
-                u[v_x, v_y] = true
-                for j in (0..<model.nodes[v_x][v_y].neighbors.count) {
-                    let to_x = model.nodes[v_x][v_y].neighbors[j].x
-                    let to_y = model.nodes[v_x][v_y].neighbors[j].y
-                    
-                    let len = 1
-                    
-                    if matrix[v_x, v_y] + len < matrix[to_x, to_y] {
-                        matrix[to_x, to_y] = matrix[v_x, v_y] + len
-                        p[to_x, to_y] = [Int]()
-                        p[to_x, to_y].append(v_x)
-                        p[to_x, to_y].append(v_y)
-                    }
-                    //nodes[to_x][to_y].isPassed = true;
-                }
+                model.nodes[x][y].isAnimated = false
+                model.nodes[x][y].isPartOfPath = false
+                model.nodes[x][y].isVisited = false
+                unvisitedNodes.append(PathGrid.Coordinate(x: x, y: y))
             }
         }
         
-        var v_x = final_x
-        var v_y = final_y
+        var interval = 50
         
-        var path: [[Int]] = [[Int]]()
-        
-        var interval = 100
-        
-        while(v_x != starting_x || v_y != starting_y) {
-            //coloring(v_x, v_y, interval)
-            path.append([v_x, v_y])
-            let temp_p = p[v_x, v_y]
-            //print(temp_p)
-            v_x = temp_p[0]
-            v_y = temp_p[1]
-            //interval += 200
+        while(unvisitedNodes.count > 0) {
+            unvisitedNodes.sort {
+                distance[$0.x, $0.y] < distance[$1.x, $1.y]
+            }
+            let closestNode = PathGrid.Coordinate(x: unvisitedNodes.first!.x, y: unvisitedNodes.first!.y)
+            unvisitedNodes.remove(at: 0)
+            print("\(closestNode.x)  \(closestNode.y)")
+            if model.nodes[closestNode.x][closestNode.y].isObstacle {
+                continue
+            }
+            if distance[closestNode.x, closestNode.y] == mx {
+                break
+            }
+//            visitedColoring(closestNode.x, closestNode.y, interval)
+//            interval += 10
+            model.nodes[closestNode.x][closestNode.y].isVisited = true
+            visitedNodes.append(PathGrid.Coordinate(x: closestNode.x, y: closestNode.y))
+            if closestNode == PathGrid.Coordinate(x: final_x, y: final_y) {
+                break
+            }
+            
+            for neighbor in model.nodes[closestNode.x][closestNode.y].neighbors {
+                if !model.nodes[neighbor.x][neighbor.y].isVisited {
+                    distance[neighbor.x, neighbor.y] = distance[closestNode.x, closestNode.y] + 1
+                    previousNode[neighbor.x, neighbor.y] = PathGrid.Coordinate(x: closestNode.x, y: closestNode.y)
+                }
+            }
+            
         }
         
-        path.reverse()
+        var shortestPathNodes = [PathGrid.Coordinate]()
+        var currentNode = PathGrid.Coordinate(x: final_x, y: final_y)
         
-        for partOfPath in path {
-            coloring(partOfPath[0], partOfPath[1], interval)
-            interval += 100
+        for visitedNode in visitedNodes {
+            visitedColoring(visitedNode.x, visitedNode.y, interval)
+            interval += 50
         }
         
-        return (path.count != 0) ? path : nil
+        
+        while(currentNode.x != -1 && currentNode.y != -1) {
+            shortestPathNodes.insert(PathGrid.Coordinate(x: currentNode.x, y: currentNode.y), at: 0)
+            currentNode = previousNode[currentNode.x, currentNode.y]
+        }
+        
+        
+        for pathNode in shortestPathNodes {
+            //print("\(pathNode.x)  \(pathNode.y)")
+            pathColoring(pathNode.x, pathNode.y, interval)
+            interval += 300
+        }
+        
+        //return shortestPathNodes
     }
     
-    func coloring(_ v_x: Int, _ v_y: Int, _ interval: Int) {
-        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + .milliseconds(interval)) {
-            DispatchQueue.main.async {
-                //print("out: \(v_x) \(v_y)" )
-                self.model.nodes[v_x][v_y].isPassed = true
-            }
-        }
-    }
+    
+
+    
 }
+
+

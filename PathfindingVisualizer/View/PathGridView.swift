@@ -23,18 +23,21 @@ struct PathGridView: View {
                         Rectangle()
                             .cornerRadius(10)
                             .aspectRatio(1, contentMode: .fit)
-                            .foregroundColor(nodeColor(node: viewModel.nodes[index]))
+                            .foregroundColor(.white)
+                            .colorMultiply(nodeColor(node: viewModel.nodes[index]))
+                            //.transition(.opacity)
                             .border(Color.blue.opacity(0.5), width: 0.5)
                             .onTapGesture {
-                                switch editingMode {
-                                    case .startingNode:
-                                        viewModel.chooseStartingNode(x: index/numberOfColumns, y: index%numberOfColumns)
-                                    case .finalNode:
-                                        viewModel.chooseFinalNode(x: index/numberOfColumns, y: index%numberOfColumns)
-                                    case .obstacle:
-                                        viewModel.chooseObstacleNode(x: index/numberOfColumns, y: index%numberOfColumns)
+                                withAnimation(.linear(duration: 0.5)) {
+                                    switch editingMode {
+                                        case .startingNode:
+                                            viewModel.chooseStartingNode(x: index/numberOfColumns, y: index%numberOfColumns)
+                                        case .finalNode:
+                                            viewModel.chooseFinalNode(x: index/numberOfColumns, y: index%numberOfColumns)
+                                        case .obstacle:
+                                            viewModel.chooseObstacleNode(x: index/numberOfColumns, y: index%numberOfColumns)
+                                    }
                                 }
-                                
                             }
                             .gesture(panGesture(index: index, for: geometry.size))
                     }
@@ -73,9 +76,6 @@ struct PathGridView: View {
     }
 
     private func nodeColor(node: PathGrid.Node) -> Color {
-//        if node.isPassed {
-//            return Color.purple
-//        }
         if node.isStartingNode {
             return Color.green
         }
@@ -85,8 +85,11 @@ struct PathGridView: View {
         if node.isObstacle {
             return Color.black.opacity(0.8)
         }
-        if node.isPassed {
-            return Color.blue
+        if node.isPartOfPath {
+            return Color.yellow
+        }
+        if node.isAnimated {
+            return Color.pink.opacity(0.8)
         }
         return Color.white
     }

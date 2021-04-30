@@ -40,7 +40,9 @@ extension PathGrid {
             }
         }
         
-        var isPassed: Bool = false
+        var isPartOfPath: Bool = false
+        var isVisited: Bool = false
+        var isAnimated: Bool = false
         
         
         //var isSelected: Bool = false

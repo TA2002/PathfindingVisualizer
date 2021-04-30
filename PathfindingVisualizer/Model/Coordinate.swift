@@ -9,7 +9,7 @@ import Foundation
 
 extension PathGrid {
     
-    struct Coordinate {
+    struct Coordinate : Equatable {
         var x: Int // x -> top-down
         var y: Int // y -> left-right
         
