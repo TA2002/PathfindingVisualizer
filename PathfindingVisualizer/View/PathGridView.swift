@@ -147,7 +147,7 @@ struct PathGridView: View {
     }
 
     func computedNumberOfCells(for size: CGSize) -> Int {
-        print("numberOfRows: \(Int((size.height * 0.8) / computedWidth(for: size)))")
+        //print("numberOfRows: \(Int((size.height * 0.8) / computedWidth(for: size)))")
         return computedNumberOfRows(for: size) * Int(numberOfColumns)
         //return numberOfColumns * numberOfColumns
     }

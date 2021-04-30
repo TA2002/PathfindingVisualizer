@@ -77,21 +77,13 @@ extension PathGridViewModel {
         
     }
     
-    func pathColoring(_ v_x: Int, _ v_y: Int, _ interval: Int) {
-        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + .milliseconds(interval)) {
-            DispatchQueue.main.async {
-                print("part of path: \(v_x) \(v_y) interval \(interval)" )
-                self.model.nodes[v_x][v_y].isPartOfPath = true
-                
-            }
-        }
-    }
+    
     
     func visitedColoring(_ v_x: Int, _ v_y: Int, _ interval: Int) {
         DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + .milliseconds(interval)) {
             DispatchQueue.main.async {
                 //print("visited: \(v_x) \(v_y)"  )
-                withAnimation(.linear(duration: 0.5)){
+                withAnimation(.linear(duration: 0.25)){
                     self.model.nodes[v_x][v_y].isAnimated = true
                 }
             }
@@ -126,7 +118,7 @@ extension PathGridViewModel {
             }
             let closestNode = PathGrid.Coordinate(x: unvisitedNodes.first!.x, y: unvisitedNodes.first!.y)
             unvisitedNodes.remove(at: 0)
-            print("\(closestNode.x)  \(closestNode.y)")
+            //print("\(closestNode.x)  \(closestNode.y)")
             if model.nodes[closestNode.x][closestNode.y].isObstacle {
                 continue
             }
@@ -164,12 +156,54 @@ extension PathGridViewModel {
             currentNode = previousNode[currentNode.x, currentNode.y]
         }
         
+        var index = 0
         
-        for pathNode in shortestPathNodes {
-            //print("\(pathNode.x)  \(pathNode.y)")
-            pathColoring(pathNode.x, pathNode.y, interval)
-            interval += 300
+        let timer = DispatchSource.makeTimerSource()
+        
+        timer.schedule(deadline: .now() + .milliseconds(interval), repeating: 0.2)
+        
+        timer.setEventHandler {
+            print("Timer fired!")
+            DispatchQueue.main.async {
+                if index == shortestPathNodes.count{
+                    timer.cancel()
+                }
+                withAnimation(.linear(duration: 0.25)){
+                    if index < shortestPathNodes.count {
+                        self.model.nodes[shortestPathNodes[index].x][shortestPathNodes[index].y].isPartOfPath = true
+                        index += 1
+                    }
+                }
+            }
+            
+            
         }
+        
+        timer.activate()
+        
+//        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + .milliseconds(interval)) {
+//
+//        }
+        
+        
+        
+        
+//        func pathColoring() {
+//
+//        }
+//
+//
+//        pathColoring()
+        
+        
+        
+//        for pathNode in shortestPathNodes {
+//            //print("\(pathNode.x)  \(pathNode.y)")
+//
+//            interval += 300
+//        }
+        
+        
         
         //return shortestPathNodes
     }
@@ -178,5 +212,6 @@ extension PathGridViewModel {
 
     
 }
+
 
 
