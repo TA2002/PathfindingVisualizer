@@ -11,12 +11,20 @@ import SwiftUI
 class PathGridViewModel: ObservableObject {
     @Published private var model: PathGrid
     
+    var numberOfRows: Int = 50
+    var numberOfColumns: Int = 50
+    
     init(numberOfRows: Int, numberOfColumns: Int) {
-        model = PathGrid(numberOfRows: numberOfColumns, numberOfColumns: numberOfColumns)
+        model = PathGrid(numberOfRows: numberOfRows, numberOfColumns: numberOfColumns)
     }
     
     var nodes: [PathGrid.Node] {
         var oneDimensionalArray = [PathGrid.Node]()
+//        for row_index in (0..<numberOfRows) {
+//            for column_index in (0..<numberOfColumns) {
+//                oneDimensionalArray.append(model.nodes[row_index][column_index])
+//            }
+//        }
         for row in model.nodes {
             oneDimensionalArray.append(contentsOf: row)
         }

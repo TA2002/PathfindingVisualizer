@@ -16,6 +16,9 @@
 		690BE793262F13B5002426CB /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690BE792262F13B5002426CB /* Coordinate.swift */; };
 		690BE796262F13D5002426CB /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690BE795262F13D5002426CB /* Node.swift */; };
 		690BE799262F1676002426CB /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690BE798262F1676002426CB /* Matrix.swift */; };
+		69F63021263DD81B00B4F337 /* GlobalStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F63020263DD81B00B4F337 /* GlobalStates.swift */; };
+		69F63027263EC77000B4F337 /* RadioButtonGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F63026263EC77000B4F337 /* RadioButtonGroup.swift */; };
+		69F6302D263F31EB00B4F337 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F6302C263F31EA00B4F337 /* Menu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		690BE792262F13B5002426CB /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		690BE795262F13D5002426CB /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		690BE798262F1676002426CB /* Matrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
+		69F63020263DD81B00B4F337 /* GlobalStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalStates.swift; sourceTree = "<group>"; };
+		69F63026263EC77000B4F337 /* RadioButtonGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButtonGroup.swift; sourceTree = "<group>"; };
+		69F6302C263F31EA00B4F337 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				6907CF2C262D5B1B001166E9 /* PathfindingVisualizerApp.swift */,
+				69F63026263EC77000B4F337 /* RadioButtonGroup.swift */,
 				6907D035262DD3DF001166E9 /* ViewModel */,
 				6907D032262DD3D4001166E9 /* Model */,
 				6907D02A262DD39D001166E9 /* View */,
@@ -85,6 +92,8 @@
 			isa = PBXGroup;
 			children = (
 				6907CF2E262D5B1B001166E9 /* PathGridView.swift */,
+				69F6302C263F31EA00B4F337 /* Menu.swift */,
+				69F63020263DD81B00B4F337 /* GlobalStates.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -179,6 +188,9 @@
 			files = (
 				690BE799262F1676002426CB /* Matrix.swift in Sources */,
 				6907D030262DD3CE001166E9 /* PathGrid.swift in Sources */,
+				69F63021263DD81B00B4F337 /* GlobalStates.swift in Sources */,
+				69F63027263EC77000B4F337 /* RadioButtonGroup.swift in Sources */,
+				69F6302D263F31EB00B4F337 /* Menu.swift in Sources */,
 				6907CF2F262D5B1B001166E9 /* PathGridView.swift in Sources */,
 				6907CF2D262D5B1B001166E9 /* PathfindingVisualizerApp.swift in Sources */,
 				690BE796262F13D5002426CB /* Node.swift in Sources */,
