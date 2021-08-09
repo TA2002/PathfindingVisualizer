@@ -171,7 +171,6 @@ extension PathGridViewModel {
         timer.schedule(deadline: .now() + .milliseconds(interval), repeating: 0.2)
         
         timer.setEventHandler {
-            print("Timer fired!")
             DispatchQueue.main.async {
                 if index == shortestPathNodes.count{
                     timer.cancel()
